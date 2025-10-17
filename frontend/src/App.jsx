@@ -1,18 +1,27 @@
-import { useState } from "react";
-import "./App.css";
-import { BrowserRouter as Router , Routes ,Route } from "react-router-dom";
+import PublicRoute from "./components/PublicRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar/Navbar";
+import { Routes, Route } from "react-router-dom";
+import "./App.css"
+import Signup from "./pages/Signup";
+import Play from "./pages/Play";
+import Create from "./pages/Create";
 
-export default function App() {
+export default function App({ theme, setTheme }) {
   return (
     <>
-    <Navbar/>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-      </Routes>
-    </Router>
+      <Navbar theme={theme} setTheme={setTheme}/>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/play" element={<PublicRoute><Play /></PublicRoute>} />
+          <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        </Routes>
     </>
   );
 }

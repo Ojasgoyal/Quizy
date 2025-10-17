@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ theme: propTheme, setTheme: propSetTheme }) {
   const darkTheme = "night"
   const lightTheme = "corporate"
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || darkTheme);
+
+  const [internalTheme, setInternalTheme] = useState(
+    localStorage.getItem("theme") || darkTheme
+  );
+
+  const theme = propTheme ?? internalTheme;
+  const setTheme = propSetTheme ?? setInternalTheme;
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -15,9 +21,10 @@ export default function ThemeToggle() {
     setTheme(theme === darkTheme ? lightTheme : darkTheme);
   };
 
+
   return (
-    <button className="btn btn-sm" onClick={toggleTheme}>
-      {theme === darkTheme ? <Sun size={20}/> : <Moon size={20}/>}
+    <button className="btn btn-xs" onClick={toggleTheme}>
+      {theme === darkTheme ? <Sun size={15}/> : <Moon size={15}/>}
     </button>
   );
 }

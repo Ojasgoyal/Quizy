@@ -1,4 +1,3 @@
-// ...existing code...
 import React, { useEffect, useRef } from "react";
 
 export default function Hero() {
@@ -48,7 +47,7 @@ export default function Hero() {
             <div className="space-y-4">
               <div
                 ref={(el) => (elementsRef.current[0] = el)}
-                className="opacity-0 translate-y-6 scale-95 transform transition-all duration-600 ease-out inline-flex items-center gap-2 bg-gradient-to-r from-primary to-info rounded-full px-3 py-1 text-sm shadow-lg font-medium"
+                className="opacity-0 translate-y-6 scale-95 transform transition-all duration-600 ease-out inline-flex items-center gap-2 bg-gradient-to-r from-accent to-info rounded-full px-3 py-1 text-sm shadow-lg font-medium"
               >
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-200">
                   Launching v1 Soon
@@ -110,4 +109,3 @@ export default function Hero() {
     </>
   );
 }
-// ...existing code...
