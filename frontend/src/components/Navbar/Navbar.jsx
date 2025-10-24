@@ -58,7 +58,7 @@ export default function Navbar({ theme, setTheme }) {
                     Dashboard
                   </Link>
                 </li>
-                <li key="nav-user" class="flex items-end ">
+                <li key="nav-user" className="flex items-end ">
                   <UserButton />
                 </li>
               </>

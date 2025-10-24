@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose"
 
 const optionSchema = new mongoose.Schema({
-  text: { type: String, required: true },
+  text: { type: String },
   isCorrect: { type: Boolean, default: false },
 })
 
 const questionSchema = new Schema({
-  question: { type: String, required: true },
+  question: { type: String },
   type: { type: String, enum: ["scq", "mcq"], required: true },
   options: {
     type: [optionSchema],
@@ -37,4 +37,4 @@ const quizSchema = new Schema(
   { timestamps: true }
 )
 
-export const quiz = mongoose.model("Quiz", quizSchema)
+export const Quiz = mongoose.model("Quiz", quizSchema)
