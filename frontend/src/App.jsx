@@ -9,6 +9,7 @@ import "./App.css"
 import Signup from "./pages/Signup";
 import Play from "./pages/Play";
 import Create from "./pages/Create";
+import QuizBuilder from "./pages/QuizBuilder";
 
 export default function App({ theme, setTheme }) {
   return (
@@ -18,9 +19,10 @@ export default function App({ theme, setTheme }) {
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/play" element={<PublicRoute><Play /></PublicRoute>} />
+          <Route path="/play" element={<Play />} />
           <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/quiz/edit/:quizId" element={<ProtectedRoute><QuizBuilder /></ProtectedRoute>}/>
         </Routes>
     </>
   );
