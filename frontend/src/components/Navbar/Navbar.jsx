@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ThemeToggle from "../../ThemeToggle";
 import { UserButton, useUser } from "@clerk/clerk-react";
 
@@ -7,65 +7,76 @@ export default function Navbar({ theme, setTheme }) {
 
   if (!isLoaded) return null;
 
+  const navClass =
+    "relative text-xs md:text-sm font-semibold after:content-[''] after:absolute after:left-1/2 after:-translate-x-1/2 after:-bottom-1 after:h-px after:bg-current after:rounded-full after:w-0 after:opacity-0 after:transition-all after:duration-300 after:ease-out";
+  const activeUnderline = "after:w-full after:opacity-100";
+
   return (
     <>
-      <div className="navbar max-w-7xl mx-auto px-6 py-0 bg-transparent shadow-sm ">
+      <div className="navbar max-w-7xl mx-auto pl-5 pr-10 py-0 bg-transparent shadow-sm ">
         <div className="navbar-start text-3xl font-bold">
           <Link to="/">Quizy</Link>
         </div>
         <div className="navbar-end">
-          <ul className="flex items-center gap-2 md:gap-5">
+          <ul className="flex items-center gap-2 md:gap-10">
+            <li>
+              <ThemeToggle theme={theme} setTheme={setTheme} />
+            </li>
             <li key="nav-play">
-              <Link className="text-xs md:text-sm font-semibold" to="/play">
+              <NavLink
+                to="/play"
+                end
+                className={({ isActive }) =>
+                  `${navClass} ${isActive ? activeUnderline : ""}`
+                }
+              >
                 Play
-              </Link>
+              </NavLink>
             </li>
             {!isSignedIn && (
               <>
                 <li key="nav-signup">
-                  <Link
-                    className="text-xs md:text-sm font-semibold"
+                  <NavLink
                     to="/signup"
+                    end
+                    className={({ isActive }) =>
+                      `${navClass} ${isActive ? activeUnderline : ""}`
+                    }
                   >
                     Signup
-                  </Link>
+                  </NavLink>
                 </li>
                 <li key="nav-login">
-                  <Link
-                    className="text-xs md:text-sm font-semibold"
+                  <NavLink
                     to="/login"
+                    end
+                    className={({ isActive }) =>
+                      `${navClass} ${isActive ? activeUnderline : ""}`
+                    }
                   >
                     Login
-                  </Link>
+                  </NavLink>
                 </li>
               </>
             )}
             {isSignedIn && (
               <>
-                <li key="nav-create">
-                  <Link
-                    className="text-xs md:text-sm font-semibold"
-                    to="/create"
-                  >
-                    Create
-                  </Link>
-                </li>
                 <li key="nav-dashboard">
-                  <Link
-                    className="text-xs md:text-sm font-semibold"
+                  <NavLink
                     to="/dashboard"
+                    end
+                    className={({ isActive }) =>
+                      `${navClass} ${isActive ? activeUnderline : ""}`
+                    }
                   >
                     Dashboard
-                  </Link>
+                  </NavLink>
                 </li>
                 <li key="nav-user" className="flex items-end ">
                   <UserButton />
                 </li>
               </>
             )}
-            <li>
-              <ThemeToggle theme={theme} setTheme={setTheme} />
-            </li>
           </ul>
         </div>
       </div>

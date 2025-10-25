@@ -23,7 +23,7 @@ export default function ThemeToggle({ theme: propTheme, setTheme: propSetTheme }
 
 
   return (
-    <button className="btn btn-xs" onClick={toggleTheme}>
+    <button className="btn btn-xs btn-accent" onClick={toggleTheme}>
       {theme === darkTheme ? <Sun size={15}/> : <Moon size={15}/>}
     </button>
   );
