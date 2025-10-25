@@ -5,29 +5,26 @@ import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 
 export const createQuiz = asyncHandler(async (req, res) => {
-    
+
     const { userId } = getAuth(req)
     if (!userId) {
         throw new ApiError(401, "Unauthorized: user not logged in")
     }
-    
+
+    const { error, value } = quizSchema.validate(req.body || {}, { abortEarly: false });
+    if (error) {
+        throw new ApiError(400, error.details.map(d => d.message).join(", "));
+    }
+
     const newQuiz = new Quiz({
-        title: "Untitled Quiz",
-        description: "",
+        title: value.title,
+        description: value.description,
         creatorClerkId: userId,
-        questions: [
-            {
-                question: "",
-                type: "scq",
-                options: [
-                    { text: "", isCorrect: false },
-                ]
-            },
-        ],
-    })
-    
+        questions: value.questions,
+    });
+
     const savedQuiz = await newQuiz.save();
 
-    return res.status(201).json(new ApiResponse(201 , savedQuiz , {message:"quiz created successfully"}))
+    return res.status(201).json(new ApiResponse(201, savedQuiz, { message: "quiz created successfully" }))
 
 })

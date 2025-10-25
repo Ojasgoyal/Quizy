@@ -80,12 +80,12 @@ export default function Dashboard() {
                 <div
                   key={quiz._id}
                   onClick={() => navigate(`/quiz/edit/${quiz._id}`)}
-                  className="cursor-pointer w-64 h-40 border rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-br from-primary to-accent justify-between"
+                  className="cursor-pointer w-32 md:w-64 h-20 md:h-40 border rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-br from-primary to-accent justify-between"
                 >
                   <h2 className="font-semibold text-gray-100 text-lg truncate">
                     {quiz.title || "Untitled Quiz"}
                   </h2>
-                  <p className="text-sm text-gray-100">
+                  <p className="hidden md:block text-sm text-gray-100">
                     {quiz.updatedAt
                       ? new Date(quiz.updatedAt).toLocaleString()
                       : "N/A"}
