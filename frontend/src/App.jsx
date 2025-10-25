@@ -16,8 +16,8 @@ export default function App({ theme, setTheme }) {
       <Navbar theme={theme} setTheme={setTheme}/>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/signup/*" element={<Signup />} />
+          <Route path="/login/*" element={<Login />} />
           <Route path="/play" element={<Play />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/quiz/edit/:quizId" element={<ProtectedRoute><QuizBuilder /></ProtectedRoute>}/>

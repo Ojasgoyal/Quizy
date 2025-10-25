@@ -144,16 +144,16 @@ export default function Root() {
         };
 
   return (
-    <BrowserRouter>
-      <ClerkProvider
-        // force remount when theme changes so Clerk reapplies appearance
-        key={theme}
-        publishableKey={PUBLISHABLE_KEY}
-        appearance={clerkAppearance}
-      >
+    <ClerkProvider
+      // force remount when theme changes so Clerk reapplies appearance
+      key={theme}
+      publishableKey={PUBLISHABLE_KEY}
+      appearance={clerkAppearance}
+    >
+      <BrowserRouter>
         <App theme={theme} setTheme={setTheme} />
-      </ClerkProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ClerkProvider>
   );
 }
 

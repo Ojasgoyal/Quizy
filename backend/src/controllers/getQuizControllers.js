@@ -17,9 +17,7 @@ export const getQuiz = asyncHandler(async (req, res) => {
     
     if (quizData?.creatorClerkId !== userId) {
         throw new ApiError(403, "Forbidden: You cannot edit this quiz");
-    }
-    console.log("hi");
-    
+    } 
 
     res.status(200).json(new ApiResponse(200 , quizData))
 })
