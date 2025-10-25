@@ -30,9 +30,11 @@ import healthcheckRouter from "./routes/healthcheckRoutes.js"
 import createQuiz from "./routes/createRoutes.js"
 import getQuiz from "./routes/getQuizRoutes.js";
 import getUserQuiz from "./routes/getUserQuizRoutes.js";
+import editQuiz from "./routes/editRoutes.js";
 
 app.use("/api/v1/healthcheck", healthcheckRouter)
 app.use("/api/v1/create", createQuiz)
+app.use("/api/v1/edit" , editQuiz)
 app.use("/api/v1/quiz", getQuiz)
 app.use("/api/v1/userquizzes", getUserQuiz)
 
