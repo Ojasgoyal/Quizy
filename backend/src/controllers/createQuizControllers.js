@@ -3,6 +3,7 @@ import { Quiz } from "../models/quiz.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
+import { quizSchema } from "../validators/quizValidator.js"
 
 export const createQuiz = asyncHandler(async (req, res) => {
 
