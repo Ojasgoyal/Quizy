@@ -145,8 +145,6 @@ export default function Root() {
 
   return (
     <ClerkProvider
-      // force remount when theme changes so Clerk reapplies appearance
-      key={theme}
       publishableKey={PUBLISHABLE_KEY}
       appearance={clerkAppearance}
     >
