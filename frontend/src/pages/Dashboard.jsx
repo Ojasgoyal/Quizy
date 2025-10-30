@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { Trash } from "lucide-react";
 
 export default function Dashboard() {
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -31,6 +32,27 @@ export default function Dashboard() {
       navigate(`/quiz/edit/${quizId}`);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDelete = async (e, quizId) => {
+    e?.stopPropagation();
+    const ok = window.confirm("Delete this Quiz?");
+    if (!ok) return;
+
+    try {
+      const token = await clerk.session.getToken();
+
+      await axios.delete(`${apiUrl}/delete/quiz/${quizId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setQuizzes((prev) => prev.filter((q) => q._id !== quizId));
+    } catch (error) {
+      console.error("Delete Failed:", error);
+      alert("Failed to delete quiz. Try again.");
     }
   };
 
@@ -80,11 +102,23 @@ export default function Dashboard() {
                 <div
                   key={quiz._id}
                   onClick={() => navigate(`/quiz/edit/${quiz._id}`)}
-                  className="cursor-pointer w-32 md:w-64 h-20 md:h-40 border rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-br from-primary to-accent justify-between"
+                  className="cursor-pointer w-32 md:w-64 h-20 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-br from-primary to-accent justify-between"
                 >
+                  <div className="flex items-start justify-between gap-2">
                   <h2 className="font-semibold text-gray-100 text-lg truncate">
                     {quiz.title || "Untitled Quiz"}
                   </h2>
+                  <button
+                    onClick={(e) => handleDelete(e, quiz._id)}
+                    className="ml-auto btn btn-sm p-2 rounded-md shadow-md bg-red-500 hover:bg-red-600 hover:shadow-lg transform transition-all duration-150 cursor-pointer border-0 focus:outline-none"
+                    aria-label="Delete quiz"
+                  >
+                    <Trash
+                      size={20}
+                      className="text-white"
+                    />
+                  </button>
+                  </div>
                   <p className="hidden md:block text-sm text-gray-100">
                     {quiz.updatedAt
                       ? new Date(quiz.updatedAt).toLocaleString()
