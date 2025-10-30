@@ -29,5 +29,5 @@ export const editQuiz = asyncHandler(async (req, res) => {
 
     await quizData.save();
 
-    res.status(200).json(new ApiResponse(true, "Quiz updated successfully", quizData));
+    res.status(200).json(new ApiResponse(200, quizData , {message: "Quiz updated successfully"}));
 })
