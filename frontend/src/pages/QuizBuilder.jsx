@@ -122,7 +122,10 @@ export default function QuizBuilder() {
       if (bottomRef.current) {
         bottomRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
       } else {
-        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
       }
     }, 80);
   };
@@ -165,22 +168,26 @@ export default function QuizBuilder() {
   return (
     <div className="min-h-screen mb-6">
       {/* Title and Description */}
-      <div className="max-w-5xl mx-auto px-4 py-6">
-        <div className="flex gap-2 justify-between items-center">
-          <input
-            type="text"
-            className="input input-ghost text-2xl font-semibold w-full focus:outline-none"
-            placeholder="Untitled Quiz"
-            value={quiz.title}
-            onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
-          />
-          <button
-            className={`btn btn-primary ${saving ? "btn-disabled" : ""}`}
-            onClick={handleSave}
-          >
-            {saving ? "Saving..." : "Save"}
-          </button>
+      <div className="sticky top-0 z-10 pb-2 bg-base-100/90 backdrop-blur-sm rounded-md ">
+        <div className="max-w-5xl mx-auto px-4 pt-3">
+          <div className="flex gap-2 justify-between items-center">
+            <input
+              type="text"
+              className="input input-ghost text-2xl font-semibold w-full focus:outline-none"
+              placeholder="Untitled Quiz"
+              value={quiz.title}
+              onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
+            />
+            <button
+              className={`btn btn-primary ${saving ? "btn-disabled" : ""}`}
+              onClick={handleSave}
+            >
+              {saving ? "Saving..." : "Save"}
+            </button>
+          </div>
         </div>
+      </div>
+      <div className="max-w-5xl mx-auto px-4 pb-6">
         <textarea
           className="textarea textarea-ghost focus:outline-none w-full mt-4"
           placeholder="Quiz description (optional)"

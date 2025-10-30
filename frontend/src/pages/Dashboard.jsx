@@ -56,6 +56,19 @@ export default function Dashboard() {
     }
   };
 
+  const formatDate = (iso) => {
+    if (!iso) return "N/A";
+    const d = new Date(iso);
+    if (isNaN(d)) return "N/A";
+    return d.toLocaleString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  };
+
   useEffect(() => {
     if (!clerk.session) return;
 
@@ -106,24 +119,24 @@ export default function Dashboard() {
                 >
                   <div
                     key={quiz._id}
-                    className="cursor-pointer w-32 md:w-64 h-20 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-br from-primary to-accent justify-between"
+                    className="relative cursor-pointer w-32 md:w-64 h-20 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-b from-primary to-accent justify-between"
                   >
-                    <div className="flex items-start justify-between gap-2">
+                    <button
+                      onClick={(e) => handleDelete(e, quiz._id)}
+                      className="absolute top-2 right-2 z-20 ml-auto btn btn-sm p-2 rounded-md shadow-md bg-rose-500 hover:bg-rose-600 hover:shadow-lg tansition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
+                      aria-label="Delete quiz"
+                    >
+                      <Trash size={16} className="text-white" />
+                    </button>
+
+                    <div className="flex items-start gap-2 pr-8">
                       <h2 className="font-semibold text-gray-100 text-lg truncate">
                         {quiz.title || "Untitled Quiz"}
                       </h2>
-                      <button
-                        onClick={(e) => handleDelete(e, quiz._id)}
-                        className="ml-auto btn btn-sm p-2 rounded-md shadow-md bg-red-500 hover:bg-red-600 hover:shadow-lg transform transition-all duration-150 cursor-pointer border-0 focus:outline-none"
-                        aria-label="Delete quiz"
-                      >
-                        <Trash size={20} className="text-white" />
-                      </button>
                     </div>
+
                     <p className="hidden md:block text-sm text-gray-100">
-                      {quiz.updatedAt
-                        ? new Date(quiz.updatedAt).toLocaleString()
-                        : "N/A"}
+                      {formatDate(quiz.updatedAt)}
                     </p>
                   </div>
                 </Link>
