@@ -1,8 +1,8 @@
 import mongoose,{Schema} from "mongoose";
 
 const answerSchema = new Schema({
-    questionText: { type: String, required: true },
-    answerGiven: { type: String, required: true },
+    questionId: { type: Schema.Types.ObjectId,ref:"Quiz.questions", required: true },
+    answerGiven: { type: Schema.Types.ObjectId,ref:"Quiz.questions.options"},
     isCorrect: { type: Boolean, required: true },
 })
 

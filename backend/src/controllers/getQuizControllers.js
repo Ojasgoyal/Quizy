@@ -4,7 +4,6 @@ import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 import { getAuth } from "@clerk/express"
 
-
 export const getQuiz = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
 
@@ -12,7 +11,7 @@ export const getQuiz = asyncHandler(async (req, res) => {
 
     const { quizId } = req.params;
 
-    const quizData = await Quiz.findById(quizId);
+    const quizData = await Quiz.findById(quizId).lean();
     if (!quizData) throw new ApiError(404, "Quiz not found");
     
     if (quizData?.creatorClerkId !== userId) {
