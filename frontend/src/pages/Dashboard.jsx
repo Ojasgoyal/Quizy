@@ -36,7 +36,6 @@ export default function Dashboard() {
   };
 
   const handleDelete = async (e, quizId) => {
-    e?.stopPropagation();
     const ok = window.confirm("Delete this Quiz?");
     if (!ok) return;
 
@@ -116,13 +115,24 @@ export default function Dashboard() {
                   key={quiz._id}
                   to={`/quiz/edit/${quiz._1d ?? quiz._id}`} // keep existing id usage
                   className="no-underline"
+                  onClick={(e) => {
+                    // Prevent navigation if the delete button is clicked
+                    if (e.target.closest("button")) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   <div
                     key={quiz._id}
                     className="relative cursor-pointer w-32 md:w-64 h-20 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-b from-primary to-accent justify-between"
                   >
                     <button
-                      onClick={(e) => handleDelete(e, quiz._id)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the click from bubbling to the Link
+                        e.nativeEvent?.stopImmediatePropagation(); // Prevent immediate bubbling
+                        e.preventDefault();
+                        handleDelete(e, quiz._id);
+                      }}
                       className="absolute top-2 right-2 z-20 ml-auto btn btn-sm p-2 rounded-md shadow-md bg-rose-500 hover:bg-rose-600 hover:shadow-lg tansition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
                       aria-label="Delete quiz"
                     >
