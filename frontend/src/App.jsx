@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Play from "./pages/Play";
 import QuizBuilder from "./pages/QuizBuilder";
 import Player from "./pages/Player";
+import Results from "./components/Player/Results";
 
 export default function App({ theme, setTheme }) {
   return (
@@ -37,6 +38,7 @@ export default function App({ theme, setTheme }) {
           }
         />
         <Route path="/play/quiz/:quizId" element={<Player />}/>
+        <Route path="/quiz/:quizId/results" element={<Results />}/>
       </Routes>
     </>
   );
