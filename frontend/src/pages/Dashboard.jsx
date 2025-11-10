@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useClerk } from "@clerk/clerk-react";
 import { useNavigate, Link } from "react-router-dom";
-import { Trash } from "lucide-react";
+import { Trash, Share2 } from "lucide-react";
 
 export default function Dashboard() {
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -10,6 +10,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(null);
 
   const handleCreateQuiz = async () => {
     try {
@@ -53,6 +54,14 @@ export default function Dashboard() {
       console.error("Delete Failed:", error);
       alert("Failed to delete quiz. Try again.");
     }
+  };
+
+  const handleCopyLink = (quizId) => {
+    const playLink = `${window.location.origin}/play/quiz/${quizId}`;
+    navigator.clipboard.writeText(playLink).then(() => {
+      setCopied(quizId);
+      setTimeout(() => setCopied(null), 2000);
+    });
   };
 
   const formatDate = (iso) => {
@@ -138,6 +147,27 @@ export default function Dashboard() {
                     >
                       <Trash size={16} className="text-white" />
                     </button>
+
+                    {/* Share Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        e.nativeEvent?.stopImmediatePropagation();
+                        handleCopyLink(quiz._id);
+                      }}
+                      className="absolute bottom-2 right-2 z-20 btn btn-sm p-2 rounded-md shadow-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg transition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
+                      aria-label="Share quiz"
+                    >
+                      <Share2 size={16} className="text-white" />
+                    </button>
+
+                    {/* Copied Message */}
+                    {copied === quiz._id && (
+                      <div className="absolute bottom-10 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-md shadow-md">
+                        Copied!
+                      </div>
+                    )}
 
                     <div className="flex items-start gap-2 pr-8">
                       <h2 className="font-semibold text-gray-100 text-lg truncate">
