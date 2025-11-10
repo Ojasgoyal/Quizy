@@ -10,7 +10,8 @@ import Signup from "./pages/Signup";
 import Play from "./pages/Play";
 import QuizBuilder from "./pages/QuizBuilder";
 import Player from "./pages/Player";
-import Results from "./components/Player/Results";
+import Results from "./pages/Results";
+import ResultsDashboard from "./pages/ResultDashboard";
 
 export default function App({ theme, setTheme }) {
   return (
@@ -37,8 +38,16 @@ export default function App({ theme, setTheme }) {
             </ProtectedRoute>
           }
         />
-        <Route path="/play/quiz/:quizId" element={<Player />}/>
-        <Route path="/quiz/:quizId/results" element={<Results />}/>
+        <Route path="/play/quiz/:quizId" element={<Player />} />
+        <Route
+          path="/results"
+          element={
+            <ProtectedRoute>
+              <ResultsDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/quiz/:quizId/:attemptId/results" element={<Results />} />
       </Routes>
     </>
   );

@@ -22,17 +22,6 @@ export default function Navbar({ theme, setTheme }) {
             <li>
               <ThemeToggle theme={theme} setTheme={setTheme} />
             </li>
-            <li key="nav-play">
-              <NavLink
-                to="/play"
-                end
-                className={({ isActive }) =>
-                  `${navClass} ${isActive ? activeUnderline : ""}`
-                }
-              >
-                Play
-              </NavLink>
-            </li>
             {!isSignedIn && (
               <>
                 <li key="nav-signup">
@@ -61,6 +50,17 @@ export default function Navbar({ theme, setTheme }) {
             )}
             {isSignedIn && (
               <>
+            <li key="nav-play">
+              <NavLink
+                to="/results"
+                end
+                className={({ isActive }) =>
+                  `${navClass} ${isActive ? activeUnderline : ""}`
+                }
+              >
+                Results
+              </NavLink>
+            </li>
                 <li key="nav-dashboard">
                   <NavLink
                     to="/dashboard"
