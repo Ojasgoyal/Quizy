@@ -1,11 +1,12 @@
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams , useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Question from "../components/Player/Question";
 
 export default function Player() {
-  const navigate = useNavigate()
+  const clerk = useClerk();
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const { quizId } = useParams();
   const { isSignedIn, user } = useUser();
@@ -69,20 +70,29 @@ export default function Player() {
   };
 
   // Handle "Submit" button click
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        `${apiUrl}/play/${quizId}/submit`,
-        attempt
-      );
-      const { score, totalQuestions } = response.data.data;
-
-      navigate(`/quiz/${quizId}/results`, { state: { score, totalQuestions } });
-    } catch (error) {
-      console.error(error);
-      alert("Failed to submit quiz");
+const handleSubmit = async () => {
+  try {
+    const headers = {};
+    if (isSignedIn) {
+      const token = await clerk.session.getToken(); // Get the Clerk session token
+      headers.Authorization = `Bearer ${token}`; // Include the token in the Authorization header
     }
-  };
+
+    const response = await axios.post(
+      `${apiUrl}/play/${quizId}/submit`,
+      attempt,
+      { headers } // Pass headers conditionally
+    );
+    const { attemptData, totalQuestions } = response.data.data;
+    const { _id ,  score } = attemptData;
+    navigate(`/quiz/${quizId}/${_id}/results`, {
+      state: { score, totalQuestions },
+    });
+  } catch (error) {
+    console.error(error);
+    alert("Failed to submit quiz");
+  }
+};
 
   const handleAnswerSelect = (questionId, optionId) => {
     setAttempt((prev) => {

@@ -21,8 +21,7 @@ export const playQuiz = asyncHandler(async (req, res) => {
 export const submitQuiz = asyncHandler(async (req, res) => {
     const { quizId } = req.params
     const { playerName, answers } = req.body
-    const { userId } = getAuth(req) || {}
-
+    const { userId } = getAuth(req)
     const quizData = await Quiz.findById(quizId).select("questions").lean()
 
     if (!quizData) throw new ApiError(404, "Quiz not found")
@@ -61,7 +60,6 @@ export const submitQuiz = asyncHandler(async (req, res) => {
         }
     })
 
-
     const attempt = new Attempt({
         quizId,
         playerClerkId: finalPlayerClerkId || null,
@@ -69,8 +67,8 @@ export const submitQuiz = asyncHandler(async (req, res) => {
         score,
         answers: validAnswers,
     })
-    await attempt.save();
-
-    res.status(200).json(new ApiResponse(200, { score, totalQuestions: quizData.questions.length }))
+    
+    const attemptData = await attempt.save();
+    res.status(200).json(new ApiResponse(200, { attemptData, totalQuestions: quizData.questions.length }))
 
 })
