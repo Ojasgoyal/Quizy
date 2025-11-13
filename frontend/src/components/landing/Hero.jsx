@@ -5,7 +5,10 @@ export default function Hero() {
 
   useEffect(() => {
     // Respect prefers-reduced-motion
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       elementsRef.current.forEach((el) => {
         if (el) {
           el.classList.remove("opacity-0", "translate-y-6", "translate-x-8");
@@ -20,8 +23,18 @@ export default function Hero() {
       elementsRef.current.forEach((el, i) => {
         if (el) {
           setTimeout(() => {
-            el.classList.remove("opacity-0", "translate-y-6", "translate-x-8", "scale-95");
-            el.classList.add("opacity-100", "translate-y-0", "translate-x-0", "scale-100");
+            el.classList.remove(
+              "opacity-0",
+              "translate-y-6",
+              "translate-x-8",
+              "scale-95"
+            );
+            el.classList.add(
+              "opacity-100",
+              "translate-y-0",
+              "translate-x-0",
+              "scale-100"
+            );
           }, i * 150);
         }
       });
@@ -85,7 +98,10 @@ export default function Hero() {
                 >
                   Get started
                 </a>
-                <a href="/dashboard" className="btn btn-ghost rounded-full px-6 hover:scale-105 transition-transform duration-200">
+                <a
+                  href="/dashboard"
+                  className="btn btn-ghost rounded-full px-6 hover:scale-105 transition-transform duration-200"
+                >
                   Try demo
                 </a>
               </div>
