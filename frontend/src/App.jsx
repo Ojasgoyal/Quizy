@@ -12,6 +12,7 @@ import QuizBuilder from "./pages/QuizBuilder";
 import Player from "./pages/Player";
 import Results from "./pages/Results";
 import ResultsDashboard from "./pages/ResultDashboard";
+import GenerateQuiz from "./pages/Generate";
 
 export default function App({ theme, setTheme }) {
   return (
@@ -48,6 +49,14 @@ export default function App({ theme, setTheme }) {
           }
         />
         <Route path="/quiz/:quizId/:attemptId/results" element={<Results />} />
+        <Route
+          path="/generate"
+          element={
+            <ProtectedRoute>
+              <GenerateQuiz />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

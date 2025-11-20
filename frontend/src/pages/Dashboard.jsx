@@ -105,12 +105,25 @@ export default function Dashboard() {
       <div className="flex flex-col h-screen w-full p-6 overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">My Quizzes</h2>
-          <button
-            onClick={handleCreateQuiz}
-            className="btn btn-primary px-4 py-2"
-          >
-            Create
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={() => navigate("/generate")}
+              className="btn btn-md text-gray-100 bg-gradient-to-tl from-primary via-purple-400 to-rose-400 px-4 py-2
+             relative overflow-hidden group transition-transform duration-300 hover:scale-[1.03]"
+            >
+              <span
+                className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/40 to-white/10
+                   opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></span>
+              Generate with AI
+            </button>
+            <button
+              onClick={handleCreateQuiz}
+              className="btn btn-primary px-4 py-2"
+            >
+              Create
+            </button>
+          </div>
         </div>
         <div className="flex flex-wrap gap-6 p-6 overflow-y-auto">
           {!loading &&
