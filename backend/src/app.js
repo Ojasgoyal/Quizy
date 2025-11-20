@@ -1,7 +1,3 @@
-import dotenv from "dotenv"
-dotenv.config({
-  path:"./.env"
-});
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
@@ -34,12 +30,14 @@ import editQuiz from "./routes/editRoutes.js";
 import deleteQuiz  from "./routes/deleteRoutes.js";
 import playQuiz  from "./routes/playQuizRoutes.js";
 import userAttempts from "./routes/attemptRoutes.js"
+import generateQuiz from "./routes/generateRoutes.js"
 
 app.use("/api/v1/healthcheck", healthcheckRouter)
 app.use("/api/v1/create", createQuiz)
 app.use("/api/v1/edit" , editQuiz)
 app.use("/api/v1/delete" , deleteQuiz)
 app.use("/api/v1/quiz", getQuiz)
+app.use("/api/v1/aiquiz", generateQuiz);
 app.use("/api/v1/userquizzes", getUserQuiz)
 app.use("/api/v1/play" , playQuiz)
 app.use("/api/v1/attempts" , userAttempts)
