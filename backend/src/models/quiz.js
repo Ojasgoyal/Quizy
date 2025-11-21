@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose"
+import { Attempt } from "./attempt.js";
 
 const optionSchema = new mongoose.Schema({
   text: { type: String },
@@ -36,5 +37,12 @@ const quizSchema = new Schema(
   },
   { timestamps: true }
 )
+
+quizSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    await Attempt.deleteMany({ quizId: doc._id });
+    console.log(`Deleted all attempts for quiz: ${doc._id}`);
+  }
+})
 
 export const Quiz = mongoose.model("Quiz", quizSchema)
