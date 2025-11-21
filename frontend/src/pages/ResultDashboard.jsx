@@ -33,11 +33,11 @@ export default function ResultsDashboard() {
   if (loading) return <div>Loading...</div>;
 
   const groupedAttempts = attempts.reduce((acc, attempt) => {
-    const quizId = attempt.quizId._id;
+    const quizId = attempt.quizId?._id;
     if (!acc[quizId]) {
       acc[quizId] = {
-        quizTitle: attempt.quizId.title,
-        quizDescription: attempt.quizId.description,
+        quizTitle: attempt.quizId?.title,
+        quizDescription: attempt.quizId?.description,
         attempts: [],
       };
     }
@@ -58,11 +58,8 @@ export default function ResultsDashboard() {
         className="w-[380px] bg-base-200 rounded-xl shadow-md p-6"
       >
         <h2 className="text-lg font-semibold text-base-content">
-          {groupedAttempts[quizId].quizTitle}
+          {groupedAttempts[quizId]?.quizTitle}
         </h2>
-        <p className="text-sm text-base-content/70 mt-1">
-          {groupedAttempts[quizId].quizDescription}
-        </p>
 
         <div className="mt-4 border-t border-base-300 pt-3 space-y-3">
           {groupedAttempts[quizId].attempts.map((attempt) => (

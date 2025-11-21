@@ -8,14 +8,16 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { getAuth } from "@clerk/express";
+import { quizSchema } from "../validators/quizValidator.js"
 
 
 export const generateQuiz = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
 
     if (!userId) {
-        throw new ApiError(401, "Unauthorized");
+        throw new ApiError(401, "Unauthorized: user not logged in")
     }
+
     const client = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY,
     });
@@ -47,8 +49,8 @@ You MUST ALWAYS include:
 - "questions": an array of EXACTLY ${numQuestions} items.
 
 Each question MUST contain:
-- "question": string
-- "options": array of 4 items, each having:
+- "question": string (max 2 lines)
+- "options": array of 4 items (each max 5 words), each having:
     - "text": string
     - "isCorrect": boolean
 
@@ -63,7 +65,7 @@ Return ONLY the JSON.
         },
         input: `
         ${systemPrompt}
-        Generate a quiz with a title, description, and ${numQuestions} ${difficulty} ${type} questions based on: "${prompt}" Keep the quiz under 1000 output tokens.
+        Generate a quiz with a title, description, and ${numQuestions} ${difficulty} ${type} questions based on: "${prompt}" Keep the quiz under 1000 output tokens. Make sure that the questions or options are not too long.
         `
     });
 
@@ -81,18 +83,16 @@ Return ONLY the JSON.
         throw new ApiError(500, "AI returned invalid quiz structure.");
     }
 
+    const { error, value } = quizSchema.validate(data || {}, { abortEarly: false });
+    if (error) {
+        throw new ApiError(400, error.details.map(d => d.message).join(", "));
+    }
+
     const quiz = new Quiz({
-        title: data.title,
-        description: data.description,
+        title: value.title,
+        description: value.description,
         creatorClerkId: userId,
-        questions: data.questions.map((q) => ({
-            question: q.question,
-            type,
-            options: q.options.map((opt) => ({
-                text: opt.text,
-                isCorrect: opt.isCorrect,
-            })),
-        })),
+        questions: value.questions
     });
 
     const savedQuiz = await quiz.save();
