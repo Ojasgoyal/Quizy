@@ -146,7 +146,7 @@ export default function Dashboard() {
                 >
                   <div
                     key={quiz._id}
-                    className="relative cursor-pointer w-32 md:w-64 h-20 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-b from-primary to-accent justify-between"
+                    className="relative cursor-pointer w-36 md:w-64 h-30 md:h-40 border-0 rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col bg-gradient-to-b from-primary to-accent justify-between"
                   >
                     <button
                       onClick={(e) => {
@@ -155,7 +155,12 @@ export default function Dashboard() {
                         e.preventDefault();
                         handleDelete(e, quiz._id);
                       }}
-                      className="absolute top-2 right-2 z-20 ml-auto btn btn-sm p-2 rounded-md shadow-md bg-rose-500 hover:bg-rose-600 hover:shadow-lg tansition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
+                      className="absolute btn btn-xs md:btn-sm bottom-2 left-2 
+md:top-2 md:right-2 md:bottom-auto md:left-auto
+z-20 p-2 rounded-md shadow-md bg-rose-500 hover:bg-rose-600
+transition-transform duration-150 hover:scale-105 cursor-pointer
+border-0 focus:outline-none w-auto inline-flex justify-center items-center"
+
                       aria-label="Delete quiz"
                     >
                       <Trash size={16} className="text-white" />
@@ -169,7 +174,7 @@ export default function Dashboard() {
                         e.nativeEvent?.stopImmediatePropagation();
                         handleCopyLink(quiz._id);
                       }}
-                      className="absolute bottom-2 right-2 z-20 btn btn-sm p-2 rounded-md shadow-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg transition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
+                      className="absolute bottom-2 right-2 z-20 btn btn-xs md:btn-sm p-2 rounded-md shadow-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg transition-transform duration-150 hover:scale-105 cursor-pointer border-0 focus:outline-none"
                       aria-label="Share quiz"
                     >
                       <Share2 size={16} className="text-white" />
@@ -183,7 +188,7 @@ export default function Dashboard() {
                     )}
 
                     <div className="flex items-start gap-2 pr-8">
-                      <h2 className="font-semibold text-gray-100 text-lg truncate">
+                      <h2 className="font-semibold text-gray-100 text-xs md:text-lg truncate">
                         {quiz.title || "Untitled Quiz"}
                       </h2>
                     </div>

@@ -62,37 +62,35 @@ export default function Player() {
     }
   };
 
-  // Handle "Previous" button click
   const handlePrevious = () => {
     if (quesIndex > 0) {
       setQuesIndex((prevIndex) => prevIndex - 1);
     }
   };
 
-  // Handle "Submit" button click
-const handleSubmit = async () => {
-  try {
-    const headers = {};
-    if (isSignedIn) {
-      const token = await clerk.session.getToken(); // Get the Clerk session token
-      headers.Authorization = `Bearer ${token}`; // Include the token in the Authorization header
-    }
+  const handleSubmit = async () => {
+    try {
+      const headers = {};
+      if (isSignedIn) {
+        const token = await clerk.session.getToken();
+        headers.Authorization = `Bearer ${token}`;
+      }
 
-    const response = await axios.post(
-      `${apiUrl}/play/${quizId}/submit`,
-      attempt,
-      { headers } // Pass headers conditionally
-    );
-    const { attemptData, totalQuestions } = response.data.data;
-    const { _id ,  score } = attemptData;
-    navigate(`/quiz/${quizId}/${_id}/results`, {
-      state: { score, totalQuestions },
-    });
-  } catch (error) {
-    console.error(error);
-    alert("Failed to submit quiz");
-  }
-};
+      const response = await axios.post(
+        `${apiUrl}/play/${quizId}/submit`,
+        attempt,
+        { headers }
+      );
+      const { attemptData, totalQuestions } = response.data.data;
+      const { _id, score } = attemptData;
+      navigate(`/quiz/${quizId}/${_id}/results`, {
+        state: { score, totalQuestions },
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit quiz");
+    }
+  };
 
   const handleAnswerSelect = (questionId, optionId) => {
     setAttempt((prev) => {
@@ -105,76 +103,76 @@ const handleSubmit = async () => {
   };
 
   if (!quiz) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
 
   return (
-    <>
-      <div className="h-[calc(100vh-80px)] flex flex-col justify-center items-center">
-        {playing ? (
-          <div className="card shadow-md bg-gradient-to-bl from-primary/90 to-secondary/90 p-8 w-5xl text-center space-y-4 flex justify-center items-center">
-            <h1 className="text-4xl font-bold text-white">{quiz.title}</h1>
-            <Question
-              question={quiz.questions[quesIndex]}
-              onAnswerSelect={handleAnswerSelect}
-              selectedAnswer={
-                attempt.answers.find(
-                  (ans) => ans.questionId === quiz.questions[quesIndex]._id
-                )?.markedAnswerId
-              }
-            />
+    <div className="h-[calc(100vh-80px)] flex flex-col justify-center items-center p-4">
+      {playing ? (
+        <div className="card shadow-md bg-gradient-to-bl from-primary/90 to-secondary/90 p-6 w-full max-w-3xl space-y-6">
+          <h1 className="text-2xl md:text-4xl font-bold text-white text-center">
+            {quiz.title}
+          </h1>
+          <Question
+            question={quiz.questions[quesIndex]}
+            onAnswerSelect={handleAnswerSelect}
+            selectedAnswer={
+              attempt.answers.find(
+                (ans) => ans.questionId === quiz.questions[quesIndex]._id
+              )?.markedAnswerId
+            }
+          />
 
-            {/* Navigation buttons */}
-            <div className="w-full flex justify-between mt-6">
-              <button
-                className="btn btn-secondary"
-                onClick={handlePrevious}
-                disabled={quesIndex === 0}
-              >
-                Previous
-              </button>
-              {quesIndex < quiz.questions.length - 1 ? (
-                <button className="btn btn-primary" onClick={handleNext}>
-                  Next
-                </button>
-              ) : (
-                <button className="btn btn-success" onClick={handleSubmit}>
-                  Submit
-                </button>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="card shadow-md bg-gradient-to-bl from-primary/90 to-secondary/90 p-8 text-center space-y-4">
-            <h1 className="text-4xl font-bold text-white">{quiz.title}</h1>
-            <p className="text-gray-200">{quiz.description}</p>
-
-            <div className="form-control w-full max-w-xs mt-10 mx-auto">
-              <label htmlFor="playerName" className="label">
-                <span className="label-text text-md text-gray-200">
-                  Playing as
-                </span>
-              </label>
-              <input
-                type="text"
-                id="playerName"
-                placeholder="Enter Name"
-                value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
-                className="mt-3 input bg-transparent focus:outline-none text-white w-full disabled:bg-transparent disabled:border-gray-600 disabled:text-gray-300"
-                disabled={isSignedIn}
-              />
-            </div>
-
+          {/* Navigation buttons */}
+          <div className="flex justify-between items-center mt-6">
             <button
-              className="btn btn-primary w-full max-w-xs mx-auto"
-              onClick={handlePlay}
+              className="btn btn-secondary"
+              onClick={handlePrevious}
+              disabled={quesIndex === 0}
             >
-              Play
+              Previous
             </button>
+            {quesIndex < quiz.questions.length - 1 ? (
+              <button className="btn btn-primary" onClick={handleNext}>
+                Next
+              </button>
+            ) : (
+              <button className="btn btn-success" onClick={handleSubmit}>
+                Submit
+              </button>
+            )}
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      ) : (
+        <div className="card shadow-md bg-gradient-to-bl from-primary/90 to-secondary/90 p-6 w-full max-w-md space-y-6">
+          <h1 className="text-2xl md:text-4xl font-bold text-white text-center">
+            {quiz.title}
+          </h1>
+          <p className="text-gray-200 text-center">{quiz.description}</p>
+
+          <div className="form-control w-full text-center">
+            <label htmlFor="playerName" className="label">
+              <span className="label-text label-text text-md text-gray-200 my-2 ">Playing as</span>
+            </label>
+            <input
+              type="text"
+              id="playerName"
+              placeholder="Enter Name"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              className="input input-bordered mt-3 bg-transparent focus:outline-none text-white w-full disabled:bg-transparent disabled:border-gray-600 disabled:text-gray-300"
+              disabled={isSignedIn}
+            />
+          </div>
+
+          <button
+            className="btn btn-primary w-full"
+            onClick={handlePlay}
+          >
+            Start Quiz
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
