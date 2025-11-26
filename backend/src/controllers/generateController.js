@@ -39,6 +39,9 @@ export const generateQuiz = asyncHandler(async (req, res) => {
     if (!["scq", "mcq"].includes(type)) {
         throw new ApiError(400, "Invalid type");
     }
+    console.log(type)
+    const questype = type === "scq" ? "Single-Correct" : "Multi-Correct"
+    console.log(questype)
 
     const systemPrompt = `
 You MUST respond ONLY in valid JSON. No explanations. No markdown.
@@ -50,6 +53,7 @@ You MUST ALWAYS include:
 
 Each question MUST contain:
 - "question": string (max 2 lines)
+- "type": "scq" (for single correct) or "mcq" (for multi correct)
 - "options": array of 4 items (each max 5 words), each having:
     - "text": string
     - "isCorrect": boolean
@@ -65,7 +69,7 @@ Return ONLY the JSON.
         },
         input: `
         ${systemPrompt}
-        Generate a quiz with a title, description, and ${numQuestions} ${difficulty} ${type} questions based on: "${prompt}" Keep the quiz under 1000 output tokens. Make sure that the questions or options are not too long.
+        Generate a quiz with a title, description, It should have ${numQuestions} questions of ${difficulty} difficulty and type ${questype} on the topic: "${prompt}" Keep the quiz under 1000 output tokens. Make sure that the questions or options are not too long. *For Multiple-correct make all correct options isCorrect:true.
         `
     });
 
