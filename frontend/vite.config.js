@@ -9,9 +9,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: {
-        enabled: true
-      },
       manifest: {
         name: "Quizy",
         short_name: "Quizy",
