@@ -13,6 +13,7 @@ import Player from "./pages/Player";
 import Results from "./pages/Results";
 import ResultsDashboard from "./pages/ResultDashboard";
 import GenerateQuiz from "./pages/Generate";
+import InstallPage from "./pages/InstallPage";
 
 export default function App({ theme, setTheme }) {
   return (
@@ -57,6 +58,7 @@ export default function App({ theme, setTheme }) {
             </ProtectedRoute>
           }
         />
+        <Route path="/install" element={<InstallPage />} />
       </Routes>
     </>
   );
