@@ -19,7 +19,7 @@ export default function InstallPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-start md:justify-center gap-10 text-gray-200">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-around md:justify-center gap-10">
 
       {/* Text */}
       <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xs">
