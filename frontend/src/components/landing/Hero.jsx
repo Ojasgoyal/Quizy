@@ -93,16 +93,10 @@ export default function Hero() {
                 style={{ transitionDelay: "450ms" }}
               >
                 <a
-                  href="/login"
+                  href="/dashboard"
                   className="btn btn-primary rounded-full shadow-lg px-6 hover:scale-105 transition-transform duration-200"
                 >
-                  Get started
-                </a>
-                <a
-                  href="/dashboard"
-                  className="btn btn-ghost rounded-full px-6 hover:scale-105 transition-transform duration-200"
-                >
-                  Try demo
+                  Let's Create
                 </a>
               </div>
             </div>
