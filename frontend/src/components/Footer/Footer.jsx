@@ -27,13 +27,13 @@ export default function Footer() {
               Build and share interactive quizzes — lightweight, fast, and designed for learning.
             </p>
             <div className="flex items-center gap-2">
-              <a aria-label="Twitter" href="#" className="btn btn-sm btn-circle btn-ghost">
+              <a aria-label="Twitter" href="https://x.com/ojasgoyalx" className="btn btn-sm btn-circle btn-ghost" target="_blank" rel="noopener noreferrer">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a aria-label="Github" href="#" className="btn btn-sm btn-circle btn-ghost">
+              <a aria-label="Github" href="https://github.com/ojasgoyal/quizy" className="btn btn-sm btn-circle btn-ghost" target="_blank" rel="noopener noreferrer">
                 <Github className="w-4 h-4" />
               </a>
-              <a aria-label="LinkedIn" href="#" className="btn btn-sm btn-circle btn-ghost">
+              <a aria-label="LinkedIn" href="https://linkedin.com/in/ojasgoyalx" className="btn btn-sm btn-circle btn-ghost" target="_blank" rel="noopener noreferrer" >
                 <Linkedin className="w-4 h-4" />
               </a>
             </div>
